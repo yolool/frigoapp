@@ -141,3 +141,8 @@ Le **back-end** est développé en **FastAPI**, et le **front-end** est prévu a
 - CI/CD (GitHub Actions, etc.)
 - Génération OpenAPI complète
 - Export PDF/Word pour présentation
+
+  Realiser par :
+  Adam Oulehiane
+  Maryam Nouioua
+  Achraf EL BADRE
