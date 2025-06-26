@@ -1,0 +1,24 @@
+[
+  {
+    "nom": "Salade de riz",
+    "image": "salade-riz.png",
+    "ingredients": ["riz", "thon", "maïs", "tomates", "œufs durs", "vinaigrette"],
+    "etapes": [
+      "Fais cuire le riz et laisse-le refroidir.",
+      "Coupe les tomates et les œufs durs en morceaux.",
+      "Dans un saladier, mélange le riz, le maïs, le thon émietté, les tomates et les œufs.",
+      "Ajoute la vinaigrette, mélange bien et mets au frais avant de servir."
+    ]
+  },
+  {
+    "nom": "Omelette aux légumes",
+    "image": "omelette-legumes.png",
+    "ingredients": ["œufs", "poivrons", "oignons", "sel", "poivre", "huile"],
+    "etapes": [
+      "Bats les œufs dans un bol avec du sel et du poivre.",
+      "Fais revenir les légumes dans une poêle avec un peu d'huile.",
+      "Verse les œufs battus sur les légumes et laisse cuire à feu doux.",
+      "Retourne l’omelette à mi-cuisson, puis sers chaud."
+    ]
+  }
+]

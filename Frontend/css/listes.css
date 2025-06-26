@@ -1,0 +1,161 @@
+
+/* Style de base */
+body {
+  font-family: 'Josefin Sans', sans-serif;
+  margin: 0;
+  background-color: #f6fdf8;
+}
+
+.page-title {
+  color: #008060;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.listes-container {
+  padding: 20px 40px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Table des listes */
+#tableListes {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  margin-top: 30px;
+  text-align: left;
+}
+
+#tableListes th,
+#tableListes td {
+  border: 1px solid #ccc;
+  padding: 15px;
+  vertical-align: top;
+}
+
+#tableListes th {
+  background-color: #e6f4ef;
+  color: #008060;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Formulaire */
+#listeForm {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+#listeForm input,
+#listeForm textarea,
+#listeForm button {
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+#listeForm button {
+  background-color: #008060;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#listeForm button:hover {
+  background-color: #00664d;
+}
+
+/* Bouton supprimer toutes les listes */
+.btn-supprimer-liste {
+  background-color: #72ac7f !important;
+  color: white !important;
+  font-weight: bold;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.btn-supprimer-liste:hover {
+  background-color: #a5d0ae !important;
+}
+
+/* Checkbox personnalisée */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #008060;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  background-color: white;
+}
+
+.custom-checkbox input[type="checkbox"]:checked {
+  background-color: #008060;
+  border-color: #008060;
+}
+
+.custom-checkbox input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 0px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox span.checked {
+  text-decoration: line-through;
+  color: gray;
+  font-style: italic;
+}
+
+/* Boutons Action individuels */
+.btn-supprimer {
+  background-color: #fc8987;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin: 4px 2px;
+}
+
+.btn-supprimer:hover {
+  background-color: #c62828;
+}
+
+.btn-modifier {
+  background-color: #7ed581;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin: 4px 2px;
+}
+
+.btn-modifier:hover {
+  background-color: #108f07;
+}

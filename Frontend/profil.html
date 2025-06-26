@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fridge Manager – Profil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/profil.css">
+</head>
+<body>
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2><b>Fridge Manager</b></h2>
+        <p id="userName">Bienvenue !</p>
+      </div>
+<ul class="nav-menu">
+  <li><a class="nav-link" href="dashboard.html">Tableau de bord</a></li>
+  <li><a class="nav-link" href="produits.html">Mes Produits</a></li>
+  <li><a class="nav-link" href="listes.html">Listes</a></li>
+  <li><a class="nav-link " href="recettes.html">Recettes</a></li>
+  <li><a class="nav-link" href="notifications.html">Notifications</a></li>
+  <li><a class="nav-link active" href="profil.html">Profil</a></li>
+</ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">PROFIL UTILISATEUR</h1>
+        <div class="user-info">
+            <span id="username">Jean</span>
+          <button class="logout-btn" onclick="logout()">Déconnexion</button>
+        </div>
+      </div>
+
+      <section class="profil-section">
+        <div class="profil-photo">
+          <label for="photoInput">
+            <img id="profileImage" src="assets/default-profile.png" alt="Photo de profil" />
+          </label>
+          <input type="file" id="photoInput" accept="image/*" />
+        </div>
+
+        <div class="profil-infos-container">
+          <div class="profil-details profil-box">
+            <h2>Informations personnelles</h2>
+            <p><strong>Nom :</strong> <span id="profilNom">Jean Dupont</span></p>
+            <p><strong>Email :</strong> <span id="profilEmail">jean.dupont@example.com</span></p>
+            <p><strong>Inscrit depuis :</strong> <span id="profilDate">01 avril 2024</span></p>
+            <button id="modifierBtn">Modifier</button>
+          </div>
+
+          <div class="profil-stats profil-box">
+            <h2>Statistiques</h2>
+            <p><strong>Gaspillage évité :</strong> <span id="statEvite">18 produits</span></p>
+            <p><strong>Produits gaspillés :</strong> <span id="statRealise">4 produits</span></p>
+            <p><strong>Taux de réussite :</strong> <span id="statTaux">82%</span></p>
+            <canvas id="statsChart" width="300" height="200"></canvas>
+          </div>
+        </div>
+
+        <div class="profil-conseil">
+          <h2>Conseil personnalisé</h2>
+          <p id="conseilText">💡 Astuce : Pensez à planifier vos repas en début de semaine pour éviter les pertes !</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/notifications-indicator.js"></script>
+  <script src="js/profil.js"></script>
+</body>
+</html>

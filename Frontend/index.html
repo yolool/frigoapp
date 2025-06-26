@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connexion – Fridge Manager</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+
+  <body>
+    <div class="quote-box">
+  <p>L’art de planifier, le plaisir de cuisiner, la conscience de préserver. </p>
+</div>
+
+    <div class="auth-container">
+      <!-- Formulaire de Connexion -->
+      <div id="loginSection">
+        <h1>Connexion</h1>
+        <div class="error" id="loginError"></div>
+        <form id="loginForm">
+          <input type="email" id="loginEmail" placeholder="Adresse email" required />
+          <input type="password" id="loginPassword" placeholder="Mot de passe" required />
+          <button type="submit">Se connecter</button>
+        </form>
+        <div class="switch-link">
+          Pas encore de compte ? <a href="#" onclick="toggleForms()">Inscription</a>
+        </div>
+      </div>
+
+      <!-- Formulaire d'inscription -->
+      <div id="registerSection" style="display: none;">
+        <h1>Inscription</h1>
+        <div class="error" id="registerError"></div>
+        <form id="registerForm">
+          <input type="text" id="registerName" placeholder="Nom complet" required />
+          <input type="email" id="registerEmail" placeholder="Adresse email" required />
+          <input type="password" id="registerPassword" placeholder="Mot de passe" required />
+          <button type="submit">S’inscrire</button>
+        </form>
+        <div class="switch-link">
+          Déjà inscrit ? <a href="#" onclick="toggleForms()">Connexion</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleForms() {
+        const login = document.getElementById("loginSection");
+        const register = document.getElementById("registerSection");
+        login.style.display = login.style.display === "none" ? "block" : "none";
+        register.style.display = register.style.display === "none" ? "block" : "none";
+      }
+    </script>
+
+    <script src="js/auth.js"></script>
+  </body>
+</html>

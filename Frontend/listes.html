@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fridge Manager – Listes</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/listes.css" />
+
+  </head>
+
+  <body>
+    <div class="dashboard">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <h2><b>Fridge Manager</b></h2>
+          <p id="userName">Bienvenue !</p>
+        </div>
+
+<ul class="nav-menu">
+  <li><a class="nav-link" href="dashboard.html">Tableau de bord</a></li>
+  <li><a class="nav-link" href="produits.html">Mes Produits</a></li>
+  <li><a class="nav-link active" href="listes.html">Listes</a></li>
+  <li><a class="nav-link " href="recettes.html">Recettes</a></li>
+  <li><a class="nav-link" href="notifications.html">Notifications</a></li>
+  <li><a class="nav-link" href="profil.html">Profil</a></li>
+</ul>
+
+
+      </aside>
+
+      <main class="main-content">
+        <div class="page-header">
+          <h1 class="page-title">MES LISTES</h1>
+          <div class="user-info">
+            <span id="username">Jean</span>
+            <button class="logout-btn" onclick="logout()">Déconnexion</button>
+          </div>
+        </div>
+
+        <section id="listesSection">
+          <h2>Créer une nouvelle liste</h2>
+          <form id="listeForm">
+            <input type="text" id="nomListe" placeholder="Nom de la liste" required />
+            <textarea id="contenuListe" placeholder="Contenu ou description..."></textarea>
+            <button type="submit">Ajouter</button>
+            <button id="toutSupprimerBtn" class="btn-supprimer-liste">🗑 Supprimer toutes les listes</button>
+          </form>
+
+          <br><br><br>
+          <h2>Mes Listes</h2>
+          <table id="tableListes">
+            <thead>
+              <tr id="liste-noms"></tr>
+            </thead>
+            <tbody>
+              <tr id="liste-contenus"></tr>
+              <tr id="liste-dates"></tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+<script src="js/notifications-indicator.js"></script>
+    <script src="js/listes.js"></script>
+  </body>
+</html>

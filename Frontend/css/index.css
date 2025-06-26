@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, input, button, textarea {
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+
+body {
+  background: url("../assets/fonddd.jpg") no-repeat;
+  background-size: contain;
+  background-position: calc(100% + 100px) center; /* ⬅️ décalage de 100px vers la gauche */
+  background-repeat: no-repeat;
+  background-color: #FCF5E2;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6); /* filtre blanc avec opacité */
+  z-index: -1;
+}
+
+.auth-container {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 10px 20px rgba(0, 128, 96, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #008060;
+  margin-bottom: 20px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button {
+  background-color: #008060;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #00664d;
+}
+
+.switch-link {
+  text-align: center;
+  margin-top: 15px;
+  color: #444;
+}
+
+.switch-link a {
+  color: #008060;
+  text-decoration: none;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+
+.quote-box {
+  font-family: 'Dancing Script', cursive !important;
+  font-size: 2rem;
+  font-style: normal;
+  color: #38502b;
+  position: absolute;
+  left: 200px;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 400px;
+  line-height: 1.6;
+  text-align: left;
+  opacity: 0.9;
+}

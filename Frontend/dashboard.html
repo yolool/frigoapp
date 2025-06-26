@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fridge Manager – Tableau de bord</title>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2><b>Fridge Manager</b></h2>
+        <p id="userName">Bienvenue !</p>
+      </div>
+      <ul class="nav-menu">
+        <li><a class="nav-link active" href="dashboard.html">Tableau de bord</a></li>
+        <li><a class="nav-link" href="produits.html">Mes Produits</a></li>
+        <li><a class="nav-link" href="listes.html">Listes</a></li>
+        <li><a class="nav-link" href="recettes.html">Recettes</a></li>
+        <li><a class="nav-link" href="notifications.html">Notifications</a></li>
+        <li><a class="nav-link" href="profil.html">Profil</a></li>
+      </ul>
+    </aside>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+
+      <!-- Header avec 3 zones -->
+      <div class="page-header">
+        <div class="left-side">
+          <h1 class="page-title">TABLEAU DE BORD</h1>
+        </div>
+
+        <div class="center-side">
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="Rechercher un produit..." autocomplete="off">
+  <button id="clearSearch" class="clear-btn hidden">&#10005;</button>
+  <button id="searchBtn" onclick="rechercherAliment()">🔍</button>
+</div>
+<ul id="suggestions" class="suggestion-list hidden"></ul>
+
+
+        </div>
+
+        <div class="right-side user-info">
+          <span id="username">Jean</span>
+          <button class="logout-btn" onclick="logout()">Déconnexion</button>
+        </div>
+      </div>
+
+      <!-- Résultats de recherche -->
+      <div id="resultatsRecherche" class="results-grid"></div>
+
+
+      <!-- Frigo (visible uniquement ici) -->
+      <div id="dashboardSection" class="fridge-full">
+        <img src="assets/fridge-full-green.png" alt="Frigo ouvert et intégré" style="width: 100%; max-width: 1000px; display: block; margin: 0 auto;" />
+          <div id="fridgeDropZone" class="drop-zone"></div>
+      </div>
+      
+    </main>
+  </div>
+  <audio id="dropSound" src="assets/pop.mp3" preload="auto"></audio>
+
+
+  <!-- Scripts -->
+  <script src="js/dashboard.js"></script>
+<script src="js/notifications-indicator.js"></script>
+
+</body>
+</html>

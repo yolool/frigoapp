@@ -1,0 +1,79 @@
+/* Table */
+#produitsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+#produitsTable th,
+#produitsTable td {
+  border: 1px solid #ccc;
+  padding: 15px 20px;
+  text-align: center;
+}
+
+#produitsTable th {
+  background-color: #f1f1f1;
+  color: #008060;
+  font-weight: 600;
+}
+
+/* Boutons spécifiques */
+#produitsTable .btn-modifier {
+  background-color: #468b21; /* vert clair */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 4px 2px;
+}
+
+#produitsTable .btn-modifier:hover {
+  background-color: #0a520d; /* vert foncé */
+}
+
+#produitsTable .btn-supprimer {
+  background-color: #6f9b7f; /* rouge clair */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 4px 2px;
+}
+
+#produitsTable .btn-supprimer:hover {
+  background-color: #34563c; /* rouge foncé */
+}
+
+/* Formulaire */
+#produitForm {
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+#produitForm input,
+#produitForm button {
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+#produitForm button {
+  background-color: #008060;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#produitForm button:hover {
+  background-color: #00664d;
+}

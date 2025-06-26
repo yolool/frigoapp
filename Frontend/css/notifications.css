@@ -1,0 +1,72 @@
+/* === NOTIFICATIONS === */
+.alerts-section {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.alert-title {
+  font-size: 1.5rem;
+  margin: 30px 0 10px;
+}
+
+.alert-title.urgent {
+  color: #c62828;
+}
+
+.alert-title.warning {
+  color: #ef6c00;
+}
+
+.alert-list {
+  list-style: none;
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+
+.alert-list li {
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background-color: #fdfbf7;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+li.expired {
+  background-color: #ffebee;
+  border-left: 6px solid #c62828;
+  color: #b71c1c;
+}
+
+li.soon-expired {
+  background-color: #fff3e0;
+  border-left: 6px solid #ef6c00;
+  color: #e65100;
+}
+
+/* === Point rouge dans la sidebar === */
+.notification-alert {
+  position: relative;
+}
+
+.notif-indicator {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 10px;
+  height: 10px;
+  background-color: #c62828;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 1; }
+}

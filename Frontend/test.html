@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Frigo Virtuel - Anti-Gaspillage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .fridge-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fridge-container {
+            position: relative;
+            width: 300px;
+            height: 450px;
+            perspective: 1000px;
+            margin: 20px 0;
+        }
+
+        .fridge {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+
+        .fridge.open {
+            transform: rotateY(-15deg);
+        }
+
+        .fridge-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #e8e8e8, #f5f5f5);
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 3px solid #ddd;
+        }
+
+        .fridge-door {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #f0f0f0, #ffffff);
+            border-radius: 20px;
+            transform-origin: left center;
+            transition: transform 0.6s ease;
+            cursor: pointer;
+            border: 3px solid #ddd;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .fridge.open .fridge-door {
+            transform: rotateY(-120deg);
+        }
+
+        .door-handle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 60px;
+
+        }
+
+        .fridge-interior {
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            top: 5%;
+            left: 5%;
+            background: linear-gradient(180deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease 0.3s;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .fridge.open .fridge-interior {
+            opacity: 1;
+        }
+
+        .shelf {
+            flex: 1;
+            border-bottom: 2px solid #dee2e6;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 5px;
+            gap: 5px;
+            min-height: 80px;
+        }
+
+        .shelf:last-child {
+            border-bottom: none;
+        }
+
+        .food-item {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .food-item:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+        .food-item.expires-soon {
+            border-color: #ffc107;
+            animation: pulse 2s infinite;
+        }
+
+        .food-item.expired {
+            border-color: #dc3545;
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            75% { transform: translateX(2px); }
+        }
+
+        .control-panel {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .open-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-input:focus {
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-top: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            color: #333;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .suggestion-item:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .add-form {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            display: none;
+        }
+
+        .add-form.show {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: white;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            outline: none;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #495057);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .notifications {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .notification {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #ffc107;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease;
+            max-width: 300px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .notification.error {
+            border-left-color: #dc3545;
+        }
+
+        .notification.success {
+            border-left-color: #28a745;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .fridge-container {
+                width: 250px;
+                height: 375px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="fridge-section">
+            <h1 style="color: white; margin-bottom: 20px; text-align: center;">🧊 Mon Frigo Virtuel Anti-Gaspillage</h1>
+            
+            <div class="fridge-container">
+                <div class="fridge" id="fridge">
+                    <div class="fridge-body">
+                        <div class="fridge-interior">
+                            <div class="shelf" data-shelf="0"></div>
+                            <div class="shelf" data-shelf="1"></div>
+                            <div class="shelf" data-shelf="2"></div>
+                            <div class="shelf" data-shelf="3"></div>
+                        </div>
+                    </div>
+                    <div class="fridge-door" id="fridgeDoor">
+                        <div class="door-handle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="open-btn" id="openBtn">
+                <span id="openBtnText">🚪 Ouvrir le Frigo</span>
+            </button>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalItems">0</div>
+                    <div class="stat-label">Aliments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="expiringItems">0</div>
+                    <div class="stat-label">Bientôt périmés</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCalories">0</div>
+                    <div class="stat-label">Calories totales</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="wasteAvoid">0</div>
+                    <div class="stat-label">Gaspillage évité</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <h2 style="color: white; margin-bottom: 15px;">🥕 Gestion des Aliments</h2>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Rechercher un aliment...">
+                <div class="suggestions" id="suggestions"></div>
+            </div>
+
+            <div class="add-form" id="addForm">
+                <div class="form-group">
+                    <label for="foodName">Nom de l'aliment</label>
+                    <input type="text" id="foodName" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantité</label>
+                    <input type="number" id="quantity" placeholder="Ex: 2" min="1" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="unit">Unité</label>
+                    <select id="unit">
+                        <option value="pièce(s)">pièce(s)</option>
+                        <option value="kg">kg</option>
+                        <option value="g">g</option>
+                        <option value="L">L</option>
+                        <option value="mL">mL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expiryDate">Date de péremption</label>
+                    <input type="date" id="expiryDate">
+                </div>
+                <div class="form-buttons">
+                    <button class="btn btn-primary" id="addBtn">➕ Ajouter</button>
+                    <button class="btn btn-secondary" id="cancelBtn">❌ Annuler</button>
+                </div>
+            </div>
+
+            <div id="recentlyAdded" style="margin-top: 20px;">
+                <h3 style="color: white; margin-bottom: 10px;">📝 Récemment ajoutés</h3>
+                <div id="recentList" style="color: white; font-size: 14px; opacity: 0.9;">
+                    Aucun aliment ajouté pour le moment
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notifications" id="notifications"></div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // Base de données d'aliments locale
+        const foodDatabase = {
+            'pomme': { emoji: '🍎', category: 'fruits', calories: 52, defaultDays: 7 },
+            'banane': { emoji: '🍌', category: 'fruits', calories: 89, defaultDays: 5 },
+            'orange': { emoji: '🍊', category: 'fruits', calories: 62, defaultDays: 10 },
+            'fraise': { emoji: '🍓', category: 'fruits', calories: 32, defaultDays: 3 },
+            'raisin': { emoji: '🍇', category: 'fruits', calories: 69, defaultDays: 5 },
+            'tomate': { emoji: '🍅', category: 'légumes', calories: 18, defaultDays: 7 },
+            'carotte': { emoji: '🥕', category: 'légumes', calories: 41, defaultDays: 14 },
+            'brocoli': { emoji: '🥦', category: 'légumes', calories: 34, defaultDays: 5 },
+            'poivron': { emoji: '🫑', category: 'légumes', calories: 31, defaultDays: 7 },
+            'aubergine': { emoji: '🍆', category: 'légumes', calories: 25, defaultDays: 7 },
+            'lait': { emoji: '🥛', category: 'laitiers', calories: 61, defaultDays: 7 },
+            'fromage': { emoji: '🧀', category: 'laitiers', calories: 113, defaultDays: 21 },
+            'yaourt': { emoji: '🥣', category: 'laitiers', calories: 59, defaultDays: 10 },
+            'œuf': { emoji: '🥚', category: 'protéines', calories: 155, defaultDays: 21 },
+            'poisson': { emoji: '🐟', category: 'protéines', calories: 206, defaultDays: 2 },
+            'viande': { emoji: '🥩', category: 'protéines', calories: 250, defaultDays: 3 },
+            'pain': { emoji: '🍞', category: 'céréales', calories: 265, defaultDays: 3 },
+            'pâtes': { emoji: '🍝', category: 'céréales', calories: 131, defaultDays: 365 },
+            'riz': { emoji: '🍚', category: 'céréales', calories: 130, defaultDays: 365 }
+        };
+
+        // État de l'application
+        let fridgeOpen = false;
+        let fridgeItems = [];
+        let currentFood = null;
+
+        // Éléments du DOM
+        const fridge = document.getElementById('fridge');
+        const openBtn = document.getElementById('openBtn');
+        const openBtnText = document.getElementById('openBtnText');
+        const searchInput = document.getElementById('searchInput');
+        const suggestions = document.getElementById('suggestions');
+        const addForm = document.getElementById('addForm');
+        const notifications = document.getElementById('notifications');
+        const tooltip = document.getElementById('tooltip');
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            setDefaultExpiryDate();
+            updateStats();
+            checkExpiringItems();
+            
+            // Démo - Ajouter quelques aliments
+            setTimeout(() => {
+                addDemoItems();
+            }, 1000);
+        });
+
+        function setupEventListeners() {
+            openBtn.addEventListener('click', toggleFridge);
+            document.getElementById('fridgeDoor').addEventListener('click', toggleFridge);
+            searchInput.addEventListener('input', handleSearch);
+            document.getElementById('addBtn').addEventListener('click', addFoodItem);
+            document.getElementById('cancelBtn').addEventListener('click', cancelAdd);
+            
+            // Fermer les suggestions en cliquant ailleurs
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.search-container')) {
+                    suggestions.style.display = 'none';
+                }
+            });
+        }
+
+        function toggleFridge() {
+            fridgeOpen = !fridgeOpen;
+            fridge.classList.toggle('open', fridgeOpen);
+            openBtnText.textContent = fridgeOpen ? '🚪 Fermer le Frigo' : '🚪 Ouvrir le Frigo';
+            
+            if (fridgeOpen) {
+                playSound('open');
+            } else {
+                playSound('close');
+            }
+        }
+
+        function handleSearch(e) {
+            const query = e.target.value.toLowerCase().trim();
+            
+            if (query.length < 2) {
+                suggestions.style.display = 'none';
+                return;
+            }
+
+            const matches = Object.keys(foodDatabase)
+                .filter(food => food.toLowerCase().includes(query))
+                .slice(0, 5);
+
+            if (matches.length > 0) {
+                suggestions.innerHTML = matches
+                    .map(food => `
+                        <div class="suggestion-item" onclick="selectFood('${food}')">
+                            ${foodDatabase[food].emoji} ${food.charAt(0).toUpperCase() + food.slice(1)}
+                        </div>
+                    `).join('');
+                suggestions.style.display = 'block';
+            } else {
+                suggestions.style.display = 'none';
+            }
+        }
+
+        function selectFood(foodName) {
+            currentFood = foodName;
+            searchInput.value = '';
+            suggestions.style.display = 'none';
+            
+            // Remplir le formulaire
+            document.getElementById('foodName').value = foodName.charAt(0).toUpperCase() + foodName.slice(1);
+            addForm.classList.add('show');
+            
+            // Focus sur la quantité
+            document.getElementById('quantity').focus();
+        }
+
+        function setDefaultExpiryDate() {
+            const today = new Date();
+            today.setDate(today.getDate() + 7); // 7 jours par défaut
+            document.getElementById('expiryDate').value = today.toISOString().split('T')[0];
+        }
+
+        function addFoodItem() {
+            if (!currentFood) return;
+
+            const quantity = parseInt(document.getElementById('quantity').value) || 1;
+            const unit = document.getElementById('unit').value;
+            const expiryDate = document.getElementById('expiryDate').value;
+
+            if (!expiryDate) {
+                showNotification('Veuillez sélectionner une date de péremption', 'error');
+                return;
+            }
+
+            const foodData = foodDatabase[currentFood];
+            const newItem = {
+                id: Date.now(),
+                name: currentFood,
+                emoji: foodData.emoji,
+                quantity: quantity,
+                unit: unit,
+                expiryDate: new Date(expiryDate),
+                calories: foodData.calories * quantity,
+                addedDate: new Date(),
+                category: foodData.category
+            };
+
+            fridgeItems.push(newItem);
+            renderFridgeItems();
+            updateStats();
+            updateRecentList();
+            
+            showNotification(`${foodData.emoji} ${currentFood} ajouté avec succès !`, 'success');
+            
+            // Reset form
+            addForm.classList.remove('show');
+            currentFood = null;
+            document.getElementById('quantity').value = 1;
+            setDefaultExpiryDate();
+        }
+
+        function cancelAdd() {
+            addForm.classList.remove('show');
+            currentFood = null;
+            searchInput.value = '';
+        }
+
+        function renderFridgeItems() {
+            // Vider les étagères
+            document.querySelectorAll('.shelf').forEach(shelf => {
+                shelf.innerHTML = '';
+            });
+
+            // Distribuer les aliments sur les étagères
+            fridgeItems.forEach((item, index) => {
+                const shelfIndex = index % 4;
+                const shelf = document.querySelector(`[data-shelf="${shelfIndex}"]`);
+                
+                const foodElement = document.createElement('div');
+                foodElement.className = 'food-item';
+                foodElement.innerHTML = item.emoji;
+                foodElement.title = `${item.name} - ${item.quantity} ${item.unit}`;
+                
+                // Vérifier la date de péremption
+                const today = new Date();
+                const daysUntilExpiry = Math.ceil((item.expiryDate - today) / (1000 * 60 * 60 * 24));
+                
+                if (daysUntilExpiry <= 0) {
+                    foodElement.classList.add('expired');
+                } else if (daysUntilExpiry <= 3) {
+                    foodElement.classList.add('expires-soon');
+                }
+                
+                // Événements
+                foodElement.addEventListener('click', () => showFoodDetails(item));
+                foodElement.addEventListener('mouseenter', (e) => showTooltip(e, item));
+                foodElement.addEventListener('mouseleave', hideTooltip);
+                
+                shelf.appendChild(foodElement);
+            });
+        }
+
+        function showFoodDetails(item) {
+            const today = new Date();
+            const daysUntilExpiry = Math.ceil((item.expiryDate - today) / (1000 * 60 * 60 * 24));
+            let statusText = '';
+            
+            if (daysUntilExpiry <= 0) {
+                statusText = '⚠️ PÉRIMÉ';
+            } else if (daysUntilExpiry <= 3) {
+                statusText = `⚡ Expire dans ${daysUntilExpiry} jour(s)`;
+            } else {
+                statusText = `✅ Bon pour ${daysUntilExpiry} jour(s)`;
+            }
+            
+            if (confirm(`${item.emoji} ${item.name}\n${item.quantity} ${item.unit}\n${statusText}\n\n❌ Supprimer cet aliment ?`)) {
+                removeFoodItem(item.id);
+            }
+        }
+
+        function removeFoodItem(id) {
+            fridgeItems = fridgeItems.filter(item => item.id !== id);
+            renderFridgeItems();
+            updateStats();
+            updateRecentList();
+            showNotification('Aliment supprimé', 'success');
+        }
+
+        function showTooltip(e, item) {
+            const today = new Date();
+            const daysUntilExpiry = Math.ceil((item.expiryDate - today) / (1000 * 60 * 60 * 24));
+            
+            tooltip.innerHTML = `
+                <strong>${item.name}</strong><br>
+                ${item.quantity} ${item.unit}<br>
+                ${item.calories} cal<br>
+                ${daysUntilExpiry > 0 ? `${daysUntilExpiry}j restants` : 'PÉRIMÉ'}
+            `;
+            
+            tooltip.style.left = e.pageX + 10 + 'px';
+            tooltip.style.top = e.pageY - 10 + 'px';
+            tooltip.classList.add('show');
+        }
+
+        function hideTooltip() {
+            tooltip.classList.remove('show');
+        }
+
+        function updateStats() {
+            const today = new Date();
+            const expiringItems = fridgeItems.filter(item => {
+                const daysUntilExpiry = Math.ceil((item.expiryDate - today) / (1000 * 60 * 60 * 24));
+                return daysUntilExpiry <= 3 && daysUntilExpiry > 0;
+            });
+            
+            const totalCalories = fridgeItems.reduce((sum, item) => sum + item.calories, 0);
+            
+            document.getElementById('totalItems').textContent = fridgeItems.length;
+            document.getElementById('expiringItems').textContent = expiringItems.length;
+            document.getElementById('totalCalories').textContent = totalCalories;
+            document.getElementById('wasteAvoid').textContent = Math.floor(totalCalories / 100);
+        }
+
+        function updateRecentList() {
+            const recentList = document.getElementById('recentList');
+            if (fridgeItems.length === 0) {
+                recentList.textContent = 'Aucun aliment ajouté pour le moment';
+                return;
+            }
+            
+            const recent = fridgeItems
+                .sort((a, b) => b.addedDate - a.addedDate)
+                .slice(0, 3)
+              .map(item => `${item.emoji} ${item.name} (${item.quantity} ${item.unit})`)
+                .join }

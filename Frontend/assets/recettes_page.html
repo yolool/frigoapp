@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fridge Manager – Mes Recettes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+
+</head>
+
+<body>
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2><b>Fridge Manager</b></h2>
+        <p id="userName">Bienvenue !</p>
+      </div>
+      <ul class="nav-menu">
+        <li><a class="nav-link" href="dashboard.html">Tableau de bord</a></li>
+        <li><a class="nav-link" href="produits.html">Mes Produits</a></li>
+        <li><a class="nav-link" href="listes.html">Listes</a></li>
+        <li><a class="nav-link" href="notifications.html">Notifications</a></li>
+        <li><a class="nav-link" href="profil.html">Profil</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">MES RECETTES</h1>
+        <div class="user-info">
+          <span id="username">Jean</span>
+          <button class="logout-btn" onclick="logout()">Déconnexion</button>
+        </div>
+      </div>
+
+      <!-- Navigation des recettes -->
+      <div class="recette-nav">
+        <button id="btnClassiques" class="active">Recettes classiques</button>
+        <button id="btnFrigo">Recettes avec mes ingrédients</button>
+      </div>
+
+      <!-- SECTION : Recettes personnalisées -->
+      <section id="recettesFrigo" class="recette-section hidden">
+        <h2>Recettes avec mes ingrédients 🍳</h2>
+        <div class="fridge-search">
+          <input type="text" id="searchIngredients" placeholder="Tape un ingrédient (ex : œufs, tomates...)" />
+          <button id="searchRecettesBtn">Rechercher</button>
+        </div>
+        <div id="frigoSuggestions" class="recette-grid"></div>
+      </section>
+
+      <!-- SECTION : Recettes classiques -->
+      <section id="recettesClassiques" class="recette-section">
+        <h2>Recettes classiques</h2>
+        <div id="classiquesContainer" class="recette-grid"></div>
+      </section>
+
+      <!-- MODALE pour les détails -->
+      <div id="recetteModal" class="modal hidden">
+        <div class="modal-content">
+          <span id="closeModal" class="close">&times;</span>
+          <h2 id="modalTitle"></h2>
+          <img id="modalImage" src="" alt="Image recette" />
+          <h3>Ingrédients :</h3>
+          <ul id="modalIngredients"></ul>
+          <h3>Instructions :</h3>
+          <div id="modalInstructions"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>
